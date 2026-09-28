@@ -1,0 +1,10 @@
+
+# Local teammate distribution package
+/Pawday-Windows.zip
+/.runtime/
+/Team-Distribution/
+node_modules/
+.next/
+.env
+.env.*
+!.env.example

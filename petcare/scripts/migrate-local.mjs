@@ -1,0 +1,5 @@
+import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';
+const marker='.sites-runtime/migrations-applied.json';fs.mkdirSync(path.dirname(marker),{recursive:true});const files=fs.readdirSync('drizzle').filter(n=>n.endsWith('.sql')).sort();let applied=fs.existsSync(marker)?JSON.parse(fs.readFileSync(marker,'utf8')):[];
+if(process.argv.includes('--mark-existing')){fs.writeFileSync(marker,JSON.stringify(files));console.log('Recorded already verified local migrations.');process.exit(0);}
+if(!fs.existsSync('dist/server/wrangler.json')){console.error('Run the build first.');process.exit(1);}
+for(const name of files.filter(n=>!applied.includes(n))){const r=spawnSync(process.execPath,['--import','./scripts/sites-env.mjs','./node_modules/wrangler/bin/wrangler.js','d1','execute','DB','--local','--config','dist/server/wrangler.json','--persist-to','.wrangler/state','--file','drizzle/'+name],{stdio:'inherit'});if(r.status!==0)process.exit(r.status||1);applied.push(name);fs.writeFileSync(marker,JSON.stringify(applied));}console.log('Local database is ready.');

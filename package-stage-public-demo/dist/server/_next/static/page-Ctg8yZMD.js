@@ -1,0 +1,1 @@
+import{t as e}from"./rsc-ty_bbO2f.js";import{t}from"./framework~index~layout~page~app-page-cache-render~app-page-cache~app-route-handler-dispatch-D9hUuLbx.js";var n=e(()=>{throw Error(`Unexpectedly client reference export 'default' is called on server`)},`ad3437bf538f`,`default`),r=t(),i=`force-dynamic`;function a(){return(0,r.jsx)(n,{})}export{a as default,i as dynamic};
